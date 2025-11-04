@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MegaStore | Login</title>
+    
+    <!-- CSS Styles -->
+    <style>
+        /* Global Reset and Variables */
+        :root {
+            --primary-color: #007bff; 
+            --secondary-color: #ffc107; 
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: #fff;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --danger-color: #dc3545; /* Standard red for errors */
+            --warning-color: #ffc107; /* Yellow/Orange for warnings */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; 
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            min-height: 100vh; 
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Form Layout */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1; 
+            padding: 40px 5%;
+        }
+
+        .auth-card {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px; 
+            text-align: center;
+        }
+
+        .auth-card h2 {
+            font-size: 2em;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .auth-card p {
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+        .auth-card a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* --- FLASH MESSAGE STYLING (NEW) --- */
+        .flashes {
+            list-style: none;
+            padding: 10px 0;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        
+        .flashes li {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-weight: 500;
+            text-align: left;
+        }
+        
+        .warning {
+            background-color: #fff3cd; /* Light yellow background */
+            color: #856404; /* Dark yellow text */
+            border: 1px solid #ffeeba;
+        }
+
+        /* Assuming 'dengerous' is meant to be 'danger' or a severe error */
+        .dengerous, .error, .danger {
+            background-color: #f8d7da; /* Light red background */
+            color: var(--danger-color); /* Dark red text */
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Footer Style */
+        .main-footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 5%;
+            text-align: center;
+            margin-top: auto; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Welcome Back!</h2>
+
+            <!-- --- JINJA2 LOGIC FOR FLASH MESSAGES --- -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class="flashes">
+                        {% for category, message in messages %}
+                            <!-- Flask category is used as a CSS class (e.g., 'warning', 'dengerous') -->
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            <!-- --- END FLASH MESSAGE LOGIC --- -->
+            
+            <!-- action="/login" matches your Python route -->
+            <form method="POST" action="/login"> 
+                <div class="form-group">
+                    <label for="mobile">Mobile Number</label>
+                    <!-- IMPORTANT: name='mobile' must match request.form.get('mobile') -->
+                    <input type="text" id="mobile" name="mobile" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <!-- IMPORTANT: name='password' must match request.form.get('password') -->
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+            
+            <p>Don't have an account? <a href="/signup">Sign Up here</a></p>
+            <p><a href="#">Forgot Password?</a></p>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <p>&copy; 2025 MegaStore. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
