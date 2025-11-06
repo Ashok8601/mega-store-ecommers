@@ -3,356 +3,485 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MegaStore | Your Ultimate E-commerce Destination</title>
+    <title>TyreHub | Your Destination for Quality Tyres</title>
     
     <style>
-        /* Global Reset and Variables */
-        :root {
-            --primary-color: #007bff; 
-            --secondary-color: #ffc107; 
-            --text-color: #333;
-            --bg-color: #f8f9fa;
-            --card-bg: #fff;
-            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            --danger-color: #d9534f; /* Sale color */
-        }
+       /* Global Reset and Variables */
+:root {
+    --primary-color: #004d99; /* Deep Blue for Trust and professionalism */
+    --secondary-color: #ffaa00; /* Amber/Orange for Call-to-Action */
+    --text-color: #333;
+    --bg-color: #f8f9fa;
+    --card-bg: #fff;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --danger-color: #cc0000; /* Sale/High performance red */
+    --focus-bg: #e6f0ff; /* Light blue for focus/promo */
+    --footer-bg: #222; /* Dark background for footer */
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box; 
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
 
-        body {
-            font-family: var(--font-family);
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-        }
+body {
+    font-family: var(--font-family);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+}
 
-        /* Header & Navigation */
-        .main-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 5%;
-            background-color: var(--card-bg);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: sticky; 
-            top: 0;
-            z-index: 1000;
-        }
+/* --- Header & Navigation --- */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background-color: var(--card-bg);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: sticky; 
+    top: 0;
+    z-index: 1000;
+}
 
-        .logo {
-            font-size: 1.8em;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-        .main-nav a {
-            text-decoration: none;
-            color: var(--text-color);
-            margin-left: 20px;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
+.logo {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+.main-nav a {
+    text-decoration: none;
+    color: var(--text-color);
+    margin-left: 20px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+.main-nav a:hover {
+    color: var(--primary-color);
+}
 
-        /* User Actions */
-        .user-actions input[type="search"] {
-            display: none;
-        }
-        .action-icon-btn {
-            background: none;
-            border: none;
-            font-size: 1.2em;
-            cursor: pointer;
-            margin-left: 10px;
-            padding: 5px;
-            color: var(--text-color);
-        }
-        .cart-btn {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-            font-weight: bold;
-        }
-        .account-btn {
-            background-color: var(--primary-color);
-            color: white;
-            margin-left: 5px;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+/* User Actions */
+.user-actions {
+    display: flex;
+    align-items: center;
+}
+.action-icon-btn {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 5px;
+    color: var(--text-color);
+}
+.cart-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    font-weight: bold;
+    margin-left: 10px;
+}
+.account-btn {
+    /* Hidden on this Tyre Store focused UI */
+    display: none; 
+}
 
-        /* Hamburger Menu */
-        .hamburger-menu {
-            display: none; 
-            font-size: 24px;
-            cursor: pointer;
-            border: none;
-            background: none;
-            color: var(--text-color);
-            padding: 5px 10px;
-            margin-left: 15px;
-        }
+/* Hamburger Menu */
+.hamburger-menu {
+    display: none; /* Default hidden on large screens */
+    font-size: 24px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: var(--text-color);
+    padding: 5px 10px;
+    margin-left: 15px;
+}
 
-        /* --- SEARCH OVERLAY --- */
-        #search-overlay {
-            position: fixed; 
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: var(--card-bg);
-            z-index: 1001; 
-            display: none; 
-            align-items: center;
-            padding: 15px 5%;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        #search-overlay.open {
-            display: flex;
-            height: 60px; 
-        }
-        #search-input-full {
-            flex-grow: 1;
-            padding: 10px 15px;
-            border: 2px solid var(--primary-color);
-            border-radius: 25px;
-            font-size: 1.1em;
-            outline: none;
-        }
-        #close-search-btn {
-            font-size: 1.8em;
-            margin-left: 15px;
-            cursor: pointer;
-            color: var(--text-color);
-            background: none;
-            border: none;
-        }
-        
-        /* --- MAIN BODY SECTIONS (Fixed Styles) --- */
-        main section {
-            padding: 20px 5%;
-            margin-bottom: 30px;
-        }
-        main h2 {
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 2em;
-            color: var(--primary-color);
-        }
+/* --- SEARCH OVERLAY --- */
+#search-overlay {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--card-bg);
+    z-index: 1001; 
+    display: none; 
+    align-items: center;
+    padding: 15px 5%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    height: 60px; 
+}
+#search-overlay.open {
+    display: flex;
+}
+#search-input-full {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 2px solid var(--primary-color);
+    border-radius: 25px;
+    font-size: 1.1em;
+    outline: none;
+}
+#close-search-btn {
+    font-size: 1.8em;
+    margin-left: 15px;
+    cursor: pointer;
+    color: var(--text-color);
+    background: none;
+    border: none;
+}
 
-        /* Hero Section */
-        .hero-section {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://picsum.photos/1200/400?random=1') center/cover no-repeat;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            margin-bottom: 40px;
-        }
-        .cta-button {
-            display: inline-block; 
-            padding: 12px 30px; 
-            background-color: var(--secondary-color); 
-            color: var(--text-color); 
-            text-decoration: none; 
-            border-radius: 5px; 
-            margin-top: 20px; 
-            font-weight: bold;
-        }
+/* --- TYRE SEARCH WIDGET (Crucial Component) --- */
+.tyre-search-widget {
+    display: flex;
+    gap: 10px;
+    padding: 10px 5%;
+    background-color: var(--primary-color); /* Strong, prominent color */
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+.tyre-search-widget select {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9em;
+    flex-grow: 1;
+    max-width: 200px;
+    background-color: white;
+    color: var(--text-color);
+    outline: none;
+}
+.tyre-search-widget button {
+    padding: 8px 15px;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.tyre-search-widget button:hover {
+     background-color: #ff9900;
+}
 
-        /* Category Grid */
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-        .category-item {
-            text-align: center;
-            padding: 15px;
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-        }
-        .category-item img {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-        
-        /* Product Carousel */
-        .product-carousel {
-            display: flex;
-            overflow-x: scroll; 
-            gap: 25px;
-            padding: 15px 0;
-            padding-bottom: 30px;
-        }
-        .product-card {
-            flex: 0 0 280px; 
-            padding: 20px;
-            border: 1px solid #eee;
-            border-radius: 10px;
-            background-color: var(--card-bg);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            text-align: center;
-        }
-        .product-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: contain;
-            margin-bottom: 10px;
-        }
-        .product-card .price {
-            font-size: 1.4em; 
-            color: var(--danger-color); 
-            font-weight: bold;
-        }
+/* --- MAIN BODY SECTIONS --- */
+main section {
+    padding: 40px 5%;
+    margin-bottom: 30px;
+}
+main h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 2em;
+    color: var(--primary-color);
+}
 
-        /* Promotional Banner */
-        .promo-banner {
-            text-align: center; 
-            background-color: white; 
-            padding: 40px; 
-            border-radius: 8px; 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .promo-banner input[type="email"] {
-            padding: 10px; 
-            margin: 15px 10px; 
-            border: 1px solid #ccc; 
-            border-radius: 5px; 
-            width: 250px;
-        }
-        .promo-banner .cta-button {
-             background-color: var(--primary-color); 
-             color: white;
-             /* Remove margin-top for better alignment with input */
-             margin-top: 0; 
-        }
-
-        /* Footer */
-        .main-footer {
-            background-color: #333;
-            color: white;
-            padding: 40px 5%;
-            text-align: center;
-        }
-        .footer-links {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-            text-align: left;
-        }
-        .footer-links h4 {
-             color: var(--secondary-color);
-        }
-        .footer-links ul {
-            list-style: none;
-        }
-        .footer-links a {
-            color: #ccc;
-            text-decoration: none;
-            line-height: 2;
-        }
-        .main-footer p {
-            margin-top: 20px; 
-            font-size: 0.9em;
-        }
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://picsum.photos/1200/400?random=1&blur=2') center/cover no-repeat;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    margin-bottom: 0;
+}
+.hero-section h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+.hero-section p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    max-width: 80%;
+}
+.cta-button {
+    display: inline-block; 
+    padding: 12px 30px; 
+    background-color: var(--secondary-color); 
+    color: var(--text-color); 
+    text-decoration: none; 
+    border-radius: 5px; 
+    margin-top: 20px; 
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+.cta-button:hover {
+     background-color: #ff9900;
+}
 
 
-        /* Responsive Design (Media Queries) */
-        @media (max-width: 768px) {
-            
-            .hamburger-menu {
-                display: block;
-            }
+/* Category/Feature Grid */
+.tyre-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    text-align: center;
+}
+.feature-card {
+    padding: 25px;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    border-top: 5px solid var(--primary-color); /* Accent border */
+    transition: transform 0.3s;
+}
+.feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+.feature-card h3 {
+    color: var(--primary-color);
+    margin-top: 10px;
+}
+.feature-card a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
 
-            .main-nav {
-                display: none; 
-                flex-direction: column;
-                position: absolute;
-                top: 60px; 
-                left: 0;
-                width: 100%;
-                background-color: var(--card-bg);
-                box-shadow: 0 5px 5px rgba(0,0,0,0.1);
-                padding: 10px 0;
-                z-index: 999;
-            }
-            
-            .main-nav.open {
-                display: flex; 
-            }
+/* Product Carousel (Tyre focus) */
+.tyre-carousel {
+    display: flex;
+    overflow-x: scroll; 
+    gap: 25px;
+    padding: 15px 0;
+    padding-bottom: 30px;
+    /* Optional: Hide scrollbar in webkit browsers */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+}
+.tyre-carousel::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+.tyre-card {
+    flex: 0 0 280px; 
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    background-color: var(--card-bg);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    text-align: center;
+    transition: transform 0.3s;
+}
+.tyre-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+.tyre-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+.tyre-card h3 {
+    min-height: 40px; /* Consistent height for product name */
+}
+.tyre-details {
+     font-size: 0.9em; 
+     color: #666;
+     margin-top: 5px;
+     margin-bottom: 10px;
+}
+.tyre-details span {
+     display: block;
+}
+.tyre-card .price {
+    font-size: 1.4em; 
+    color: var(--danger-color); 
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.tyre-card .add-to-cart {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.tyre-card .add-to-cart:hover {
+    background-color: #003366;
+}
 
-            .main-nav a {
-                margin: 0;
-                padding: 10px 5%;
-                border-bottom: 1px solid #eee;
-                width: 100%;
-            }
-            
-            .account-btn {
-                display: none; 
-            }
-            
-            /* User actions fix for inline icons */
-            .user-actions {
-                display: flex; 
-                align-items: center; 
-                flex-wrap: nowrap; 
-                gap: 5px; 
-            }
+/* Promotional Banner */
+.promo-banner {
+    text-align: center; 
+    background-color: var(--focus-bg); /* Light blue focus */
+    padding: 40px; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.promo-banner input[type="text"] {
+    padding: 10px; 
+    margin: 15px 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    width: 250px;
+}
+.promo-banner .cta-button {
+     background-color: var(--primary-color); 
+     color: white;
+     margin-top: 0; 
+}
 
-            .action-icon-btn {
-                font-size: 1em;
-                padding: 5px;
-                margin-left: 0;
-            }
-            
-             .cart-btn {
-                padding: 8px 10px;
-                white-space: nowrap; 
-             }
-             
-             .hero-section {
-                 height: 300px;
-             }
-        }
 
-        @media (max-width: 480px) {
-             .cart-btn {
-                padding: 8px 8px;
-                font-size: 0.8em;
-             }
-        }
+/* --- Footer --- */
+.main-footer {
+    background-color: var(--footer-bg); /* Dark background */
+    color: white;
+    padding: 40px 5%;
+    text-align: center;
+    margin-top: 40px;
+}
+.footer-links {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; 
+    margin-bottom: 30px;
+    text-align: left;
+}
+.footer-links > div {
+    min-width: 150px; 
+    margin: 10px;
+}
+.footer-links h4 {
+     color: var(--secondary-color); /* Orange/Amber headings */
+     margin-bottom: 10px;
+}
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+.footer-links a {
+    color: #ccc;
+    text-decoration: none;
+    line-height: 2;
+    transition: color 0.3s;
+}
+.footer-links a:hover {
+    color: white; 
+}
+.main-footer p {
+    margin-top: 20px; 
+    font-size: 0.9em;
+    border-top: 1px solid #444; 
+    padding-top: 15px;
+}
+
+
+/* --- Responsive Design (Media Queries) --- */
+@media (max-width: 768px) {
+    
+    .hamburger-menu {
+        display: block;
+    }
+
+    .main-nav {
+        display: none; 
+        flex-direction: column;
+        position: absolute;
+        top: 60px; /* Adjust if header height changes */
+        left: 0;
+        width: 100%;
+        background-color: var(--card-bg);
+        box-shadow: 0 5px 5px rgba(0,0,0,0.1);
+        padding: 10px 0;
+        z-index: 999;
+    }
+    
+    .main-nav.open {
+        display: flex; 
+    }
+
+    .main-nav a {
+        margin: 0;
+        padding: 10px 5%;
+        border-bottom: 1px solid #eee;
+        width: 100%;
+    }
+    
+    /* Hide 'Account' button if showing hamburger */
+    .account-btn {
+        display: none; 
+    }
+    
+    /* Tyre Search Widget Stacking */
+    .tyre-search-widget {
+         flex-direction: column;
+         align-items: stretch;
+    }
+    .tyre-search-widget select, .tyre-search-widget button {
+         max-width: 100%;
+    }
+    
+     /* Hero Section Adjustments */
+     .hero-section {
+         height: 300px;
+     }
+     .hero-section h1 {
+         font-size: 2em;
+     }
+     .hero-section p {
+         font-size: 1em;
+     }
+     
+     /* Reduce spacing for mobile */
+     main section {
+         padding: 30px 5%;
+     }
+     
+     .promo-banner input[type="text"] {
+         width: 90%;
+         margin: 10px 0;
+     }
+     .promo-banner .cta-button {
+         width: 90%;
+     }
+
+     .footer-links {
+         justify-content: flex-start;
+         text-align: left;
+     }
+}
+
+@media (max-width: 480px) {
+     .cart-btn {
+        padding: 8px 8px;
+        font-size: 0.8em;
+     }
+     .tyre-card {
+         /* Make cards slightly smaller for very small screens */
+         flex: 0 0 250px;
+     }
+}
     </style>
 </head>
 <body>
 
     <div id="search-overlay">
-        <input type="search" id="search-input-full" placeholder="Search thousands of products..." autofocus>
+        <input type="search" id="search-input-full" placeholder="Search by brand, size (e.g., 205/55R16)..." autofocus>
         <button id="close-search-btn">✕</button>
     </div>
 
     <header class="main-header">
-        <div class="logo">MegaStore</div>
+        <div class="logo">TyreHub </div>
         
         <nav class="main-nav" id="main-nav">
             <a href="#">Home</a>
-            <a href="#">Shop</a>
-            <a href="#">Categories</a>
-            <a href="#">Deals</a>
+            <a href="#">All Categories</a>
+            <a href="#">Tyre Finder</a>
+            <a href="#">Brands</a>
+            <a href="#">Refurbished Deals</a>
             <a href="/login">Login</a>
             <a href="/signup">Signup</a>
         </nav>
@@ -362,57 +491,126 @@
                 🔍
             </button>
             <button class="cart-btn">🛒 Cart (0)</button>
-            <button class="account-btn">👤 Account</button>
+            <button class="account-btn" style="display: none;">👤 Account</button>
             
             <button class="hamburger-menu" id="hamburger-btn">☰</button>
         </div>
     </header>
+    
+    <div class="tyre-search-widget">
+        <select name="tyre_width">
+            <option value="">Width (e.g., 205)</option>
+            <option value="205">205 mm</option>
+            <option value="225">225 mm</option>
+            </select>
+        <select name="aspect_ratio">
+            <option value="">Ratio (e.g., 55)</option>
+            <option value="55">55</option>
+            <option value="60">60</option>
+            </select>
+        <select name="rim_size">
+            <option value="">Rim (e.g., R16)</option>
+            <option value="R16">R16</option>
+            <option value="R17">R17</option>
+            </select>
+        <button>Find My Tyres 🔍</button>
+    </div>
 
     <main>
         <section class="hero-section">
             <div class="hero-content">
-                <h1>🎉 Mega Sale! Up to 50% Off!</h1>
-                <p>Shop the latest trends in electronics, fashion, and more.</p>
-                <a href="#" class="cta-button">Shop Now</a>
+                <h1>Find the Right Grip, Right Here.</h1>
+                <p>Search by size, vehicle type, or browse our **Quality Guaranteed** selections.</p>
+                <a href="#featured-tyres" class="cta-button">View Top Deals</a>
+            </div>
+        </section>
+        
+        <section class="tyre-categories">
+            <h2>⚙️ Browse By Category & Vehicle</h2>
+            <div class="tyre-feature-grid">
+                <div class="feature-card"><h3>Car Tyres</h3><p>Sedans, Hatchbacks, SUVs.</p><a href="#">Shop Now &rarr;</a></div>
+                <div class="feature-card"><h3>Truck & Bus Tyres</h3><p>Heavy duty and commercial solutions.</p><a href="#">Shop Now &rarr;</a></div>
+                <div class="feature-card"><h3>Bike Tyres</h3><p>Sport, Cruiser, and Scooters.</p><a href="#">Shop Now &rarr;</a></div>
+                <div class="feature-card"><h3>Off-Road (AT/MT)</h3><p>All-Terrain and Mud-Terrain specialist tyres.</p><a href="#">Shop Now &rarr;</a></div>
             </div>
         </section>
 
-        <section class="featured-categories">
-            <h2>🛍️ Shop By Category</h2>
-            <div class="category-grid">
-                <div class="category-item"><img src="https://picsum.photos/300/180?random=2" alt="Electronics"><h3>Electronics</h3></div>
-                <div class="category-item"><img src="https://picsum.photos/300/180?random=3" alt="Fashion"><h3>Fashion</h3></div>
-                <div class="category-item"><img src="https://picsum.photos/300/180?random=4" alt="Home Goods"><h3>Home & Kitchen</h3></div>
-                <div class="category-item"><img src="https://picsum.photos/300/180?random=5" alt="Sports"><h3>Sports & Outdoors</h3></div>
+        <section class="tyre-quality">
+            <h2>✨ Quality & Condition</h2>
+            <div class="tyre-feature-grid">
+                <div class="feature-card" style="border-top-color: green;"><h3>New Tyres</h3><p>Latest models, full warranty.</p><a href="#">Browse All &rarr;</a></div>
+                <div class="feature-card" style="border-top-color: orange;"><h3>Refurbished Tyres</h3><p>Quality checked and certified savings.</p><a href="#">View Deals &rarr;</a></div>
+                <div class="feature-card" style="border-top-color: var(--danger-color);"><h3>High Performance</h3><p>Maximum speed and grip for sports vehicles.</p><a href="#">Shop Speed &rarr;</a></div>
+                <div class="feature-card" style="border-top-color: gray;"><h3>Budget Tyres</h3><p>Reliable and economical options.</p><a href="#">Shop Budget &rarr;</a></div>
             </div>
         </section>
 
-        <section class="featured-products">
-            <h2>🔥 Best Sellers</h2>
-            <div class="product-carousel">
-                <div class="product-card"><img src="https://picsum.photos/250/180?random=6" alt="Laptop"><h3>Pro Laptop X1</h3><p>High performance.</p><p class="price">$1299.00</p><button class="add-to-cart" data-product-id="1">Add to Cart</button></div>
-                <div class="product-card"><img src="https://picsum.photos/250/180?random=7" alt="Sneakers"><h3>Running Sneakers</h3><p>Comfort and style.</p><p class="price">$89.99</p><button class="add-to-cart" data-product-id="2">Add to Cart</button></div>
-                <div class="product-card"><img src="https://picsum.photos/250/180?random=8" alt="Smart Watch"><h3>Smart Watch Ultra</h3><p>Track your goals.</p><p class="price">$199.50</p><button class="add-to-cart" data-product-id="3">Add to Cart</button></div>
-                <div class="product-card"><img src="https://picsum.photos/250/180?random=9" alt="Headphones"><h3>Noise-Cancelling Headphones</h3><p>Pure sound.</p><p class="price">$249.00</p><button class="add-to-cart" data-product-id="4">Add to Cart</button></div>
+        <section class="featured-tyres" id="featured-tyres">
+            <h2>🔥 Hot Selling Tyres</h2>
+            <div class="tyre-carousel">
+                <div class="tyre-card">
+                    <img src="https://picsum.photos/250/180?random=10" alt="All Season Tyre">
+                    <h3>Premium All-Season</h3>
+                    <div class="tyre-details">
+                        <span>**Size:** 205/55R16</span>
+                        <span>**Rating:** V (240 km/h)</span>
+                        <span>**Quality:** New</span>
+                    </div>
+                    <p class="price">$129.00</p>
+                    <button class="add-to-cart" data-product-id="1">Add to Cart</button>
+                </div>
+                <div class="tyre-card">
+                    <img src="https://picsum.photos/250/180?random=11" alt="Off-Road Tyre">
+                    <h3>Off-Road Mud Terrain</h3>
+                     <div class="tyre-details">
+                        <span>**Size:** 265/70R17</span>
+                        <span>**Rating:** Q (160 km/h)</span>
+                        <span>**Quality:** New</span>
+                    </div>
+                    <p class="price">$249.99</p>
+                    <button class="add-to-cart" data-product-id="2">Add to Cart</button>
+                </div>
+                <div class="tyre-card">
+                    <img src="https://picsum.photos/250/180?random=12" alt="Refurbished Tyre">
+                    <h3>Budget City Tyre</h3>
+                     <div class="tyre-details">
+                        <span>**Size:** 185/65R15</span>
+                        <span>**Rating:** H (210 km/h)</span>
+                        <span>**Quality:** Refurbished</span>
+                    </div>
+                    <p class="price">$45.50</p>
+                    <button class="add-to-cart" data-product-id="3">Add to Cart</button>
+                </div>
+                <div class="tyre-card">
+                    <img src="https://picsum.photos/250/180?random=13" alt="Performance Tyre">
+                    <h3>Sport Max Performance</h3>
+                     <div class="tyre-details">
+                        <span>**Size:** 225/40R18</span>
+                        <span>**Rating:** Y (300 km/h)</span>
+                        <span>**Quality:** New</span>
+                    </div>
+                    <p class="price">$199.00</p>
+                    <button class="add-to-cart" data-product-id="4">Add to Cart</button>
+                </div>
             </div>
         </section>
 
-        <section class="promo-banner">
-            <h2>✉️ Don't Miss Out!</h2>
-            <p>Sign up for our newsletter and get **10% off** your first order.</p>
-            <input type="email" placeholder="Enter your email">
-            <button class="cta-button promo-banner-btn">Subscribe</button>
+        <section class="promo-banner" style="background-color: var(--focus-bg);">
+            <h2>🛠️ Need Installation?</h2>
+            <p>Book a slot with one of our certified garages near you and get an **extra 5% off** installation fee.</p>
+            <input type="text" placeholder="Enter your Pincode">
+            <button class="cta-button promo-banner-btn" style="background-color: var(--primary-color);">Check Garages</button>
         </section>
 
     </main>
 
     <footer class="main-footer">
         <div class="footer-links">
-            <div><h4>Company</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Careers</a></li></ul></div>
-            <div><h4>Customer Service</h4><ul><li><a href="#">Contact</a></li><li><a href="#">Returns & Exchanges</a></li><li><a href="#">Shipping</a></li></ul></div>
-            <div><h4>Connect</h4><ul><li><a href="#">Facebook</a></li><li><a href="#">Instagram</a></li></ul></div>
+            <div><h4>Tyre Categories</h4><ul><li><a href="#">Car</a></li><li><a href="#">Bike</a></li><li><a href="#">Truck</a></li><li><a href="#">Winter</a></li></ul></div>
+            <div><h4>Help & Services</h4><ul><li><a href="#">Installation Booking</a></li><li><a href="#">Tyre Warranty</a></li><li><a href="#">Contact Support</a></li></ul></div>
+            <div><h4>Company</h4><ul><li><a href="#">About TyreHub</a></li><li><a href="#">Become a Partner</a></li></ul></div>
         </div>
-        <p>&copy; 2025 MegaStore. All rights reserved.</p>
+        <p>&copy; 2025 TyreHub. All rights reserved.</p>
     </footer>
 
     <script>
@@ -462,8 +660,9 @@
 
         // --- 4. Carousel Scroll Reminder (UX) ---
         window.addEventListener('load', () => {
-            const carousel = document.querySelector('.product-carousel');
+            const carousel = document.querySelector('.tyre-carousel');
             if (carousel && carousel.scrollWidth > carousel.clientWidth) {
+                // Initial smooth scroll hint
                 carousel.scrollTo({ left: 50, behavior: 'smooth' });
                 setTimeout(() => {
                     carousel.scrollTo({ left: 0, behavior: 'smooth' });

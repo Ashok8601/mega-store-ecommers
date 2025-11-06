@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User Profile</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #e3f2fd, #f9f9f9);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: 0.3s;
+            font-size: 15px;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            height: 90px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .message {
+            text-align: center;
+            font-weight: 600;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .current-photo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .current-photo img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #007bff;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+        }
+
+        fieldset {
+            border: 2px solid #007bff20;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        legend {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 25px;
+            }
+
+            .current-photo img {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>👤 Edit Profile</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="message {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" enctype="multipart/form-data">
+            <div class="current-photo">
+                <label>Current Photo:</label><br>
+                {% if profile and profile.photo %}
+                    <img src="{{ url_for('uploaded_file', filename=profile.photo.split('/')[-1]) }}" alt="Profile Photo">
+                {% else %}
+                    <img src="{{ url_for('static', filename='default_profile.png') }}" alt="No Photo" title="No Photo Set">
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="user_photo">Upload New Photo:</label>
+                <input type="file" id="user_photo" name="user_photo" accept="image/*">
+            </div>
+
+            <fieldset>
+                <legend>Basic Info</legend>
+                <div class="form-group">
+                    <label>Email (readonly):</label>
+                    <input type="text" value="{{ user.email if user else '' }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Full Name:</label>
+                    <input type="text" id="username" name="username" value="{{ profile.username if profile else '' }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="alternate_mo">Alternate Mobile:</label>
+                    <input type="text" id="alternate_mo" name="alternate_mo" value="{{ profile.alternate_mo if profile else '' }}">
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Address Info</legend>
+                <div class="form-group">
+                    <label for="flat_no">Flat / House No.:</label>
+                    <input type="text" id="flat_no" name="flat_no" value="{{ profile.flat_no if profile else '' }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pincode">Pincode:</label>
+                    <input type="text" id="pincode" name="pincode" value="{{ profile.pincode if profile else '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="state">State:</label>
+                    <input type="text" id="state" name="state" value="{{ profile.state if profile else '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="district">District:</label>
+                    <input type="text" id="district" name="district" value="{{ profile.district if profile else '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" value="{{ profile.city if profile else '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="address_remark">Address Landmark / Remark:</label>
+                    <textarea id="address_remark" name="address_remark">{{ profile.address_remark if profile else '' }}</textarea>
+                </div>
+            </fieldset>
+
+            <button type="submit">💾 Save Profile</button>
+        </form>
+    </div>
+</body>
+</html>
